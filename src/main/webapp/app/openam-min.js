@@ -1,8 +1,8 @@
 angular
         .module('services.auth.openam-min', [])
         .constant('openamConstants', {
-            //DONE Ch4L1Ex3: Define serverURI as 'http://login.example.com:18080/am'
-            serverURI: 'http://login.example.com:18080/am'
+            //TODO Ch4L1Ex3: Define serverURI as 'http://login.example.com:18080/am'
+            serverURI: null
         })
         .factory('loginService', function ($http, $rootScope, openamConstants, $q) {
 
@@ -10,19 +10,19 @@ angular
                 login: function (username, password) {
                     console.info("openam-min.login(" + username + ", ****** )");
 
-                    //DONE Ch4L1Ex3: Send a POST request to serverURI/json/authenticate.
-                    //DONE Ch4L1Ex3: Send the credentials as headers: "X-OpenAM-Username" and "X-OpenAM-Password"
+                    //TODO Ch4L1Ex3: Send a POST request to serverURI/json/authenticate.
+                    //TODO Ch4L1Ex3: Send the credentials as headers: "X-OpenAM-Username" and "X-OpenAM-Password"
                     var req = {
                         method: 'POST',
-                        url: openamConstants.serverURI + '/json/authenticate',
+                        url: 'rest/auth/login',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'Accept-API-Version': 'resource=1.1, protocol=1.0',
-                            'X-OpenAM-Username': username,
-                            'X-OpenAM-Password': password
+                            'Accept-API-Version': 'resource=1.1, protocol=1.0'
                         },
                         data: {
+                            'user': username,
+                            'password': password
                         }
                     };
                    return $http(req); // returning with the promise

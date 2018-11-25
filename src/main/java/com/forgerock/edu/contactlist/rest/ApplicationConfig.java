@@ -37,7 +37,7 @@ public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
         super(
-                //DONE Ch4L1Ex3: Enable the OpenAMSessionValidatorFilter and the LocalLDAPBasedPrivilegeCalculatorFilter
+                //TODO Ch4L1Ex3: Enable the OpenAMSessionValidatorFilter and the LocalLDAPBasedPrivilegeCalculatorFilter
                 //TODO Ch4L2Ex2: Disable the LocalLDAPBasedPrivilegeCalculatorFilter and enable the SelectedRoleBasedPrivilegeCalculatorFilter
                 //TODO Ch4L4Ex2: Disable the SelectedRoleBasedPrivilegeCalculatorFilter, disable the RolesAllowedDynamicFeature and enable the OpenAMPolicyEnforcementFilter
                 //TODO Ch5L1Ex4: Disable the OpenAMSessionValidatorFilter, disable the OpenAMPolicyEnforcementFilter, enable the OpenIDConnectSessionValidatorFilter and re-enable the RolesAllowedDynamicFeature
@@ -45,12 +45,12 @@ public class ApplicationConfig extends ResourceConfig {
                 ////////////////////////////////////////////////
                 // Session Validation Filters - these are responsible for creating the SecurityContext for a single request
                 LocalTokenStoreSessionValidatorFilter.class, 
-                OpenAMSessionValidatorFilter.class,
+                //OpenAMSessionValidatorFilter.class,
                 //OpenIDConnectSessionValidatorFilter.class,
 
                 ////////////////////////////////////////////////
                 // SecurityContext Modifier Filters
-                LocalLDAPBasedPrivilegeCalculatorFilter.class,
+                //LocalLDAPBasedPrivilegeCalculatorFilter.class,
                 //SelectedRoleBasedPrivilegeCalculatorFilter.class,
                 ResourceOwnerCalculatorFilter.class,
 
