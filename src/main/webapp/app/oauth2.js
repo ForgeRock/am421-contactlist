@@ -44,23 +44,22 @@ angular
                         "response_type": "token id_token",
                         "client_id": "contactList",
                         "realm": "/",
-                        //DONE Ch5L1Ex3: Request the following scopes: openid,profile,email and contactlist-privileges. Separate them with spaces.
-                        "scope": "openid profile email contactlist-privileges",
-                        //DONE Ch5L1Ex3: Set redirect URI: http://app.test:8080/contactlist/oauth2ResponseConsumer.html
-                        "redirect_uri": "http://app.test:8080/contactlist/oauth2ResponseConsumer.html",
+                        //TODO Ch5L1Ex3: Request the following scopes: openid,profile,email and contactlist-privileges. Separate them with spaces.
+                        "scope": "",
+                        //TODO Ch5L1Ex3: Set redirect URI: http://app.test:8080/contactlist/oauth2ResponseConsumer.html
+                        "redirect_uri": "",
                         "state": oauth2Util.generateRandomString(16), //random state
-                        //DONE Ch5L1Ex3: Pass "selectRole" as the "acr_values" -> this will be mapped to the testSelectRole authentication chain at the OAuth2Provider.
-                        "acr_values": "selectRole",
+                        //TODO Ch5L1Ex3: Pass "selectRole" as the "acr_values" -> this will be mapped to the testSelectRole authentication chain at the OAuth2Provider.
+                        "acr_values": "",
                         "nonce": oauth2Util.generateRandomString(16) //random nonce
                     };
 
                     localStorage.oauth2RequestParameters = JSON.stringify(requestParameters); // Saving oauth2 request paramters in localStorage
 
-                    //DONE Ch5L1Ex3: Redirect the browser to the authorization endpoint and pass the request parameters.
-                    //DONE Ch5L1Ex3: The authorization endpoint should be retrieved from the metadata just like this: metaData.authorization_endpoint.
-                    //DONE Ch5L1Ex3: Add the URLEncoded version of the requestParameters. Use $.param function to encode requestParameters.
-                    var url = metaData.authorization_endpoint + '?'
-                        + $.param(requestParameters);
+                    //TODO Ch5L1Ex3: Redirect the browser to the authorization endpoint and pass the request parameters.
+                    //TODO Ch5L1Ex3: The authorization endpoint should be retrieved from the metadata just like this: metaData.authorization_endpoint.
+                    //TODO Ch5L1Ex3: Add the URLEncoded version of the requestParameters. Use $.param function to encode requestParameters.
+                    var url = /* authorization endpoint */ + "?" + /* urlencoded parameters */
 
                     window.location.replace(url);
                 }

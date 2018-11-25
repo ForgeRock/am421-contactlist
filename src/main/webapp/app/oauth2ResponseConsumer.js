@@ -45,10 +45,11 @@ $(document).ready(function () {
             console.info("pathname: " + window.location.pathname);
             var path = window.location.pathname;
             var newpath = path.replace('oauth2ResponseConsumer.html', '');
-            console.info("new path: " + newpath + " " + params.access_token);
-            //DONE Ch5L1Ex3: Complete the redirection path with the access_token extracted above.
-            //DONE Ch5L1Ex3: Hint: Use encodeURIComponent to URLEncode params.access_token
+            console.info("new path: " + newpath);
+            //TODO Ch5L1Ex3: Complete the redirection path with the access_token extracted above.
+            //TODO Ch5L1Ex3: Hint: Use encodeURIComponent to URLEncode params.access_token
             window.location.replace(newpath + "#/login?tokenId=" + encodeURIComponent(params.access_token));
+            window.location.replace(newpath + "#/login?tokenId=");
         }
     }
 

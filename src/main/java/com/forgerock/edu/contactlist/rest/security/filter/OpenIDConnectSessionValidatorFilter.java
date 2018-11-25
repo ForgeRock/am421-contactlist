@@ -111,22 +111,22 @@ public class OpenIDConnectSessionValidatorFilter implements ContainerRequestFilt
                 privileges.add(privilege);
             }
         }
-        //DONE Ch5L1Ex4: Read the field named "expires_in" from userInfo and store it in expiresIn variable. 
-        //DONE Ch5L1Ex4: Use userInfo.get() method and cast it to JsonNumber -> this way there will not be an exception thrown if the value is missing.
-        JsonNumber expiresIn = (JsonNumber) userInfo.get("expires_in");
+        //TODO Ch5L1Ex4: Read the field named "expires_in" from userInfo and store it in expiresIn variable. 
+        //TODO Ch5L1Ex4: Use userInfo.get() method and cast it to JsonNumber -> this way there will not be an exception thrown if the value is missing.
+        JsonNumber expiresIn = null;
         int expirationTimeInSeconds = expiresIn != null ? expiresIn.intValue() : 60;
 
         User user = User.builder()
-                //DONE Ch5L1Ex4: Ex4: Extract the user's full name from the field named "name". Use userInfo.getString(String fieldName) method.
-                .uid(userInfo.getString("sub"))
-                //DONE Ch5L1Ex4: Extract the user's full name from the field named "name"
-                .name(userInfo.getString("name", null))
-                //DONE Ch5L1Ex4: Extract the user's email from the field named "email"
-                .email(userInfo.getString("email", null))
-                //DONE Ch5L1Ex4: Extract the user's family name from the field named "family_name"
-                .familyName(userInfo.getString("family_name", null))
-                //DONE Ch5L1Ex4: Extract the user's given name from the field named "given_name"
-                .givenName(userInfo.getString("given_name", null))
+                //TODO Ch5L1Ex4: Ex4: Extract the user's full name from the field named "name". Use userInfo.getString(String fieldName) method.
+                .uid("uid")
+                //TODO Ch5L1Ex4: Extract the user's full name from the field named "name"
+                .name("Full Name")
+                //TODO Ch5L1Ex4: Extract the user's email from the field named "email"
+                .email("Email address")
+                //TODO Ch5L1Ex4: Extract the user's family name from the field named "family_name"
+                .familyName("Family Name")
+                //TODO Ch5L1Ex4: Extract the user's given name from the field named "given_name"
+                .givenName("Given name")
                 .privileges(privileges)
                 .build();
 
