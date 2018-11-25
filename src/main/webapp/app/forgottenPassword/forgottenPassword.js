@@ -19,13 +19,8 @@ angular.module('contactList.forgottenPassword',
                                                 });
                                     } else {
                                         // Token is received as part of the url -> interpreting this as a code validation phase.
-                                        //DONE Ch4L3Ex3: call selfService.validateCode and pass "forgottenPassword" as the process type, $stateParams.code as code and $stateParams.token as the token value.
-                                        //DONE Ch4L3Ex3: save the response into $scope.status (just as above with selfService.initiate)
-                                        selfService.validateCode("forgottenPassword", $stateParams.code, $stateParams.token)
-                                                .then(function (response) {
-                                                    $scope.status = response;
-                                                    console.info("confirm returned with: " + JSON.stringify(response));
-                                                });                                        
+                                        //TODO Ch4L3Ex3: call selfService.validateCode and pass "forgottenPassword" as the process type, $stateParams.code as code and $stateParams.token as the token value.
+                                        //TODO Ch4L3Ex3: save the response into $scope.status (just as above with selfService.initiate)
                                     }
                                     $scope.message = '';
                                     $scope.error = true;

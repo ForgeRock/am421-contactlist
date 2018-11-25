@@ -13,10 +13,10 @@ angular
              */
             selfService.initiate = function (processType) {
                 
-                //DONE Ch4L3Ex3: Complete the self service initiation request. Send a GET request to <serverURI>/json/selfservice/<processType>.
+                //TODO Ch4L3Ex3: Complete the self service initiation request. Send a GET request to <serverURI>/json/selfservice/<processType>.
                 var req = {
-                    method: 'GET',
-                    url: openamConstants.serverURI + '/json/selfservice/' + processType,
+                    method: null,
+                    url: openamConstants.serverURI,
                     headers: {
                         'Accept': 'application/json',
                         'Accept-API-Version': 'resource=1.0'
@@ -46,12 +46,11 @@ angular
              * @returns {promise} Returns a promise which is satisfied when the REST call returns.
              */
             selfService.submitRequirements = function (processType, input) {
-                //DONE Ch4L3Ex3: Complete the submitRequirements request. Send a POST request to <serverURI>/json/selfservice/<processType>?_action=submitRequirements.
+                //TODO Ch4L3Ex3: Complete the submitRequirements request. Send a POST request to <serverURI>/json/selfservice/<processType>?_action=submitRequirements.
                 var req = {
-                    method: 'POST',
-                    url: openamConstants.serverURI + '/json/selfservice/' + processType,
+                    method: null,
+                    url: openamConstants.serverURI,
                     params: {
-                        _action: 'submitRequirements'
                     },
                     headers: {
                         'Content-Type': 'application/json',
@@ -59,8 +58,7 @@ angular
                         'Accept-API-Version': 'resource=1.0'
                     },
                     data: {
-                        //DONE Ch4L3Ex3: Send the input sructure in the body as "input". (Hint: Type input: input)
-                        input: input
+                        //TODO Ch4L3Ex3: Send the input sructure in the body as "input". (Hint: Type input: input)
                     }
 
                 };
