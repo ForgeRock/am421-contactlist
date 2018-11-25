@@ -10,14 +10,14 @@
                 <tbody>
                     <tr ng-repeat="group in groups" ng-class="{active: group.owner === selected.owner && group._id === selected.groupId}" >
                         <td class="item" ui-sref=".listcontacts({owner:group.owner,groupId:group._id})">{{group.displayName}} </td>
-                        <!-- DONE Ch4L4Ex3: Add conditional rendering to the following td element which contains the "Edit Contact Group" icon. -->
-                        <!-- DONE Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']" -->
-                        <td class="edit" ng-if="resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']"><a ui-sref=".edit({owner:group.owner,groupId:group._id})" title="Edit Contact Group"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <!-- TODO Ch4L4Ex3: Add conditional rendering to the following td element which contains the "Edit Contact Group" icon. -->
+                        <!-- TODO Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']" -->
+                        <td class="edit"><a ui-sref=".edit({owner:group.owner,groupId:group._id})" title="Edit Contact Group"><span class="glyphicon glyphicon-edit"></span></a></td>
                     </tr>
-                    <!-- DONE Ch4L4Ex3: Add conditional rendering to the following tr element which contains the "Add Contact Group" button. -->
-                    <!-- DONE Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/create']" -->
-                    <tr ng-if="resourceIsOwnedByCurrentUser || user.privileges['contact-groups/create']">
-                        <td colspan="3" style="text-align: left"><button type="button" ui-sref=".create" class="btn btn-sm btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Contact Group&nbsp;</button></td>
+                    <!-- TODO Ch4L4Ex3: Add conditional rendering to the following tr element which contains the "Add Contact Group" button. -->
+                    <!-- TODO Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/create']" -->
+                    <tr>
+                        <td colspan="2" style="text-align: left"><button type="button" ui-sref=".create" class="btn btn-sm btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Contact Group&nbsp;</button></td>
                     </tr>
                 </tbody>
             </table>

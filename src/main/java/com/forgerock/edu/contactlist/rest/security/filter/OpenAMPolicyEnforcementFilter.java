@@ -55,7 +55,7 @@ public class OpenAMPolicyEnforcementFilter implements ContainerRequestFilter {
                     boolean allowed = actionValues.getBoolean(method, false);
                     if (!allowed) {
                         JsonObject attributes = entitlement.getJsonObject("attributes");
-                        // DONE Ch4L4Ex2: check if the deny decision is caused by maintenance mode
+                        // TODO Ch4L4Ex2: check if the deny decision is caused by maintenance mode
                         checkMaintenanceMode(new OpenAMJsonObject(attributes));
                         throw new NotAuthorizedException("Not authorized: " + attributes);
                     } else {
@@ -92,9 +92,7 @@ public class OpenAMPolicyEnforcementFilter implements ContainerRequestFilter {
         boolean maintenanceMode = "true".equals(
                 responseAttributes.getString("MaintenanceMode"));
         if (maintenanceMode) {
-            //DONE Ch4L4Ex2: Read the response attribute named "maintenanceMessage" and throw a NotAuthorizedException that contains this message.
-            String maintenanceMessage = responseAttributes.getString("maintenanceMessage");
-            throw new NotAuthorizedException("Not authorized. " + maintenanceMessage);
+            //TODO Ch4L4Ex2: Read the response attribute named "maintenanceMessage" and throw a NotAuthorizedException that contains this message.
         }
     }
 

@@ -155,8 +155,8 @@ angular
                         user[newKey] = value;
                     });
 
-                    //DONE Ch4L4Ex3: call getPrivilegesFromOpenAM
-                    loginService.getPrivilegesFromOpenAM(tokenId)
+                    //TODO Ch4L4Ex3: call getPrivilegesFromOpenAM
+                    loginService.getPrivilegesFromLocalBackend(tokenId)
                             .then(function (privileges) {
                                 user.privileges = privileges;
                                 deferred.resolve(user);
@@ -196,7 +196,7 @@ angular
 
             loginService.getPrivilegesFromOpenAM = function (tokenId) {
                 console.info("openam.getPrivileges(" + tokenId + ")");
-                //DONE Ch4L4Ex3: Complete the policy evaluation REST request: resource should be "privileges", application should be "ContactListPrivileges"
+                //TODO Ch4L4Ex3: Complete the policy evaluation REST request: resource should be "privileges", application should be "ContactListPrivileges"
                 var req = {
                     method: 'POST',
                     headers: {
@@ -207,8 +207,6 @@ angular
                     },
                     url: openamConstants.serverURI + "/json/policies",
                     data: {
-                        application: 'ContactListPrivileges',
-                        resources: ['privileges']
                     },
                     params: {
                         _action: 'evaluate'
