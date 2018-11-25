@@ -1,6 +1,6 @@
 # ContactList application #
 
-FR421 sample project to demonstrate integration with OpenAM 13.
+AM421 sample project to demonstrate integration with ForgeRock Access Management
 
 ## Backend ##
 
