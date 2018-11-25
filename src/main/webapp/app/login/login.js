@@ -23,22 +23,16 @@ angular.module('contactList.login', [
 
                             $scope.clear();
 
-                            //DONE Ch4L2Ex2: Modify the handleAuthSuccessResponse function to handle the response if the authentication phase is in SelectRole module. 
-                            //DONE Ch4L2Ex2: If response.data.stage === 'SelectRole2' then convert the response data into a parsed format with loginService.getChoiceCallback(response.data) and store it in $scope.choiceCallback.
-                            //DONE Ch4L2Ex2: If response.data.stage === 'SelectRole2' then also save the complete response in $scope.data: we will basicly send this back after the user chooses the role. See $scope.loginAs function.
-                            //DONE Ch4L2Ex2: The original code which extracts the tokenId and fetches the user profile can go into the else branch.
+                            //TODO Ch4L2Ex2: Modify the handleAuthSuccessResponse function to handle the response if the authentication phase is in SelectRole module. 
+                            //TODO Ch4L2Ex2: If response.data.stage === 'SelectRole2' then convert the response data into a parsed format with loginService.getChoiceCallback(response.data) and store it in $scope.choiceCallback.
+                            //TODO Ch4L2Ex2: If response.data.stage === 'SelectRole2' then also save the complete response in $scope.data: we will basicly send this back after the user chooses the role. See $scope.loginAs function.
+                            //TODO Ch4L2Ex2: The original code which extracts the tokenId and fetches the user profile can go into the else branch.
                             $scope.handleAuthSuccessResponse = function (response) {
                                 console.info("loginService.login returned with: " + JSON.stringify(response));
                                 $scope.clearMessages();
-                                if (typeof response.data.callbacks !== "undefined") {
-                                    if (response.data.callbacks[0].type ==='ChoiceCallback') {
-                                        $scope.data = response.data;
-                                        $scope.choiceCallback=loginService.getChoiceCallback(response.data);
-                                    }
-                                } else {
-                                    var tokenId = response.data.tokenId;
-                                    $rootScope.fetchUserProfile(tokenId, $scope.username);
-                                }
+
+                                var tokenId = response.data.tokenId;
+                                $rootScope.fetchUserProfile(tokenId, $scope.username);
                             };
 
                             $scope.login = function () {
@@ -57,17 +51,9 @@ angular.module('contactList.login', [
 
                             //TODO Ch5L1Ex3: Expose oauth2Service.startAuthorizationFlow function as loginWithOAuth2 in $scope
 
-                            //DONE Ch4L2Ex2: Create loginAS function which is called when the user selects one of the offered roles.
-                            //DONE Ch4L2Ex2: In the loginAS function call loginService.submitChoice with $scope.data and role.value which will send back the received callback structure stored in $scope.data with the selected role.
-                            //DONE Ch4L2Ex2: In the loginAS function handle the promise returned by the submitChoice function with the $scope.handleAuthSuccessResponse function. In the error handling function clear the $scope.choiceCallback and provide an error message in $scope.error.
-                            $scope.loginAs = function (role) {
-                                loginService.submitChoice($scope.data, role.value)
-                                        .then($scope.handleAuthSuccessResponse,
-                                                function (response) {
-                                                    $scope.choiceCallback = null;
-                                                    $scope.error = 'Error during sending selected role';
-                                                });
-                            };
+                            //TODO Ch4L2Ex2: Create loginAS function which is called when the user selects one of the offered roles.
+                            //TODO Ch4L2Ex2: In the loginAS function call loginService.submitChoice with $scope.data and role.value which will send back the received callback structure stored in $scope.data with the selected role.
+                            //TODO Ch4L2Ex2: In the loginAS function handle the promise returned by the submitChoice function with the $scope.handleAuthSuccessResponse function. In the error handling function clear the $scope.choiceCallback and provide an error message in $scope.error.
 
                             //If tokenId is sent in the location hash, like #/login?tokenId=abc123
                             //checking its validity

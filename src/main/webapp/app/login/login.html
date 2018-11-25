@@ -3,10 +3,10 @@
         <form class="form-signin form">
             <h2 class="form-signin-heading" ng-hide="choiceCallback">Login</h2>
             <h2 class="form-signin-heading" ng-show="choiceCallback">Select Role for this session.</h2>
-            <!-- DONE Ch4L2Ex2: Check how the username and password fields are shown/hidden based on the existence of the choiceCallback object in the scope. -->
+            <!-- TODO Ch4L2Ex2: Check how the username and password fields are shown/hidden based on the existence of the choiceCallback object in the scope. -->
             <input ng-hide="choiceCallback" ng-model="username" iname="username" type="text" class="form-control" placeholder="Username">
             <input ng-hide="choiceCallback" ng-model="password" name="password" type="password" class="form-control" placeholder="Password">
-            <!-- DONE Ch4L2Ex2: Check how the $scope.choiceCallback.selectableRoles array is rendered. -->
+            <!-- TODO Ch4L2Ex2: Check how the $scope.choiceCallback.selectableRoles array is rendered. -->
             <div ng-repeat="role in choiceCallback.selectableRoles">
                 <button class="btn btn-primary btn-large form-control space-between" type="submit" ng-click="loginAs(role)">{{role.label}}</button>
             </div>
