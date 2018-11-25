@@ -8,8 +8,8 @@ angular.module('contactList.login', [
                         url: "/login?tokenId",
                         templateUrl: "app/login/login.html",
                         noAuth: true,
-                        //DONE Ch5L1Ex3: Inject the oauth2Service into the controller: add a new parameter to this function named oauth2Service
-                        controller: function ($rootScope, $scope, $stateParams, loginService, oauth2Service) {
+                        //TODO Ch5L1Ex3: Inject the oauth2Service into the controller: add a new parameter to this function named oauth2Service
+                        controller: function ($rootScope, $scope, $stateParams, loginService) {
                             console.info("LoginWindowCtrl start");
 
                             $scope.clearMessages = function () {
@@ -55,8 +55,7 @@ angular.module('contactList.login', [
                                 return promise;
                             };
 
-                            //DONE Ch5L1Ex3: Expose oauth2Service.startAuthorizationFlow function as loginWithOAuth2 in $scope
-                            $scope.loginWithOAuth2 = oauth2Service.startAuthorizationFlow;
+                            //TODO Ch5L1Ex3: Expose oauth2Service.startAuthorizationFlow function as loginWithOAuth2 in $scope
 
                             //DONE Ch4L2Ex2: Create loginAS function which is called when the user selects one of the offered roles.
                             //DONE Ch4L2Ex2: In the loginAS function call loginService.submitChoice with $scope.data and role.value which will send back the received callback structure stored in $scope.data with the selected role.
@@ -73,19 +72,16 @@ angular.module('contactList.login', [
                             //If tokenId is sent in the location hash, like #/login?tokenId=abc123
                             //checking its validity
                             var tokenId = $stateParams.tokenId;
-                            //DONE Ch5L1Ex3: If the access token is passed in the url like #/login?tokenId=abc123, jump to the token validation state immediately.
-                            //DONE Ch5L1Ex3: if tokenId presents call $rootScope.validateToken(tokenId);
-                            if (tokenId) {
-                                $rootScope.validateToken(tokenId);
-                            }
+                            //TODO Ch5L1Ex3: If the access token is passed in the url like #/login?tokenId=abc123, jump to the token validation state immediately.
+                            //TODO Ch5L1Ex3: if tokenId presents call $rootScope.validateToken(tokenId);
                         },
                         resolve: {
-                            //DONE Ch5L1Ex3: Add a new depencency here to initialize oauth2Service before the login controller starts
-                            //DONE Ch5L1Ex3: Call oauth2Service's init() method which will return with a promise. The angular router will wait until this promise is resolved.
-                            //DONE Ch5L1Ex3: Hint: uncomment the following lines
-                            oauth2Init: function (oauth2Service) {
-                                return oauth2Service.init();
-                            }
+                            //TODO Ch5L1Ex3: Add a new depencency here to initialize oauth2Service before the login controller starts
+                            //TODO Ch5L1Ex3: Call oauth2Service's init() method which will return with a promise. The angular router will wait until this promise is resolved.
+                            //TODO Ch5L1Ex3: Hint: uncomment the following lines
+//                            oauth2Init: function (oauth2Service) {
+//                                return oauth2Service.init();
+//                            }
                         }
                     });
             console.info("login: stateprovider init");
