@@ -1,0 +1,57 @@
+<form class="form-horizontal" id="contactform">
+    <fieldset>
+        <legend>Create Contact</legend>
+        <div class="form-group">
+            <label for="_id" class="col-md-3 col-sm-4 control-label">ID</label>
+            <div class="col-md-9  col-sm-8">
+                <input ng-model="contact._id" type="text" pattern="[A-Za-z0-9_\\-]+" class="form-control input-md" id="_id" placeholder="ID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstName" class="col-md-3 col-sm-4 control-label">First Name</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.firstName" type="text" class="form-control" id="firstName" placeholder="First Name" required="">
+            </div>      
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="col-md-3 col-sm-4 control-label">Last Name</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.lastName" type="text" class="form-control" id="lastName" placeholder="Last Name" required="">
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-md-3 col-sm-4 control-label">Email address</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.email" type="text" class="form-control" id="email" placeholder="email address">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mobile" class="col-md-3 col-sm-4 control-label">Mobile</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.mobile" type="text" class="form-control" id="mobile" placeholder="mobile phone">
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="workPhone" class="col-md-3 col-sm-4 control-label">Work phone</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.workPhone" type="text" class="form-control" id="workPhone" placeholder="work phone">
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="homePhone" class="col-md-3 col-sm-4 control-label">Home phone</label>
+            <div class="col-md-9 col-sm-8">
+                <input ng-model="contact.homePhone" type="text" class="form-control" id="homePhone" placeholder="home phone">
+            </div>       
+        </div>
+        <div class="alertContainer">
+            <uib-alert ng-repeat='alert in alerts track by $index' type='{{alert.type}}' close='closeAlert($index)' dismiss-on-timeout="{{alert.dismissOnTimeout}}"> {{alert.msg}} </uib-alert>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3 col-sm-4"></div>
+            <div class="col-md-9 col-sm-8 form-buttons">
+            <button ng-hide="user.privileges['entries/modify'].allowed" type="submit" ng-click="createContact()" class="btn btn-success">Save changes</button>
+            <button type="submit" ng-click="cancel()" class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

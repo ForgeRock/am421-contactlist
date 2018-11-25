@@ -1,0 +1,30 @@
+<form class="form-horizontal" id="contactform" ui-view="">
+    <fieldset>
+        <legend>{{contact.firstName}} {{contact.lastName}}</legend>
+        <div ng-if="contact.email" class="form-group">
+            <label class="col-md-3 col-sm-4 control-label">Email address</label>
+            <div class="col-md-9 col-sm-8 form-control-static" id="_id">{{contact.email}}</div>
+        </div>
+        <div ng-if="contact.mobile" class="form-group">
+            <label class="col-md-3 col-sm-4 control-label">Mobile</label>
+            <div class="col-md-9 col-sm-8 form-control-static" id="_id">{{contact.mobile}}</div>
+        </div>
+        <div ng-if="contact.workPhone" class="form-group">
+            <label class="col-md-3 col-sm-4 control-label">Work phone</label>
+            <div class="col-md-9 col-sm-8 form-control-static" id="_id">{{contact.workPhone}}</div>
+        </div>
+        <div ng-if="contact.homePhone" class="form-group">
+            <label class="col-md-3 col-sm-4 control-label">Home phone</label>
+            <div class="col-md-9 col-sm-8 form-control-static" id="_id">{{contact.homePhone}}</div>
+        </div>
+        <div class="form-group alertContainer">
+            <uib-alert ng-repeat='alert in alerts track by $index' type='{{alert.type}}' close='closeAlert($index)' dismiss-on-timeout="{{alert.dismissOnTimeout}}"> {{alert.msg}} </uib-alert>
+        </div>
+        <div class="form-group" ng-if="resourceIsOwnedByCurrentUser || user.privileges['contacts/modify']">
+            <div class="col-md-3 col-sm-4"></div>
+            <div class="col-md-9 col-sm-8 form-buttons">
+                <button type="submit" ui-sref=".edit" class="btn btn-success">Edit contact</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

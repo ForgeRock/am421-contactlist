@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- Our contactList module defined here -->
+<html lang="en" ng-app="contactList">
+    <head>
+        <meta charset="utf-8">
+
+        <!-- using twitter bootstrap, but of course -->
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap.min.css">
+        <!-- styles for ng-animate are located here -->
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="app/login/login.css">
+        <link rel="stylesheet" type="text/css" href="vendor/angular-resizable.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/ui-bootstrap-csp.css">
+
+
+        <!-- Include angular.js, angular-animate.js and angular-ui-router.js-->
+        <script src="lib/jquery-2.1.3/jquery.js"></script>
+        <script src="lib/angular-1.4.9/angular.js"></script>
+        <script src="lib/angular-1.4.9/angular-animate.js"></script>
+        <script src="lib/angular-router-0.2.17/angular-ui-router.js"></script>
+        <script src="lib/angular-resizable/angular-resizable.js"></script>
+        <script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="lib/ng-focus-on/ng-focus-on.min.js"></script>
+
+        <!-- app.js declares the contactList module and adds items to $rootScope, and defines
+             the "home" and "about" states
+        -->
+        <script src="app/app.js"></script>
+        <script src="app/auth.js"></script>
+        <script src="app/internal-auth.js"></script>
+        <script src="app/oauth2.js"></script>
+        <script src="app/selfService.js"></script>
+        <script src="app/saml2.js"></script>
+        <script src="app/openam-min.js"></script>
+        <script src="app/openam.js"></script>
+
+        <!-- entries.js declares the contactList.entries module, and adds a number of contact
+             related states 
+        -->
+        <script src="app/contactgroups/contactService.js"></script>
+        <script src="app/contactgroups/contactgroups.js"></script>
+        <script src="app/userProfiles/userProfileService.js"></script>
+        <script src="app/userProfiles/userProfiles.js"></script>
+        <script src="app/login/login.js"></script>
+        <script src="app/forgottenPassword/forgottenPassword.js"></script>        
+
+
+        <!-- could easily use a custom property of the state here instead of 'name' -->
+        <title ng-bind="$state.current.displayName + ' - ContactList'">ContactList</title>
+    </head>
+    <body style="margin-bottom: 60px;">
+
+        <nav class="navbar">
+            <ul class="nav nav-tabs">
+                <li role="presentation" ui-sref-active="active" ><a ui-sref="home">Home</a></li>
+                <li role="presentation" ng-class="{active: $state.includes('contactgroups') || $state.includes('editContactGroup')}"><a ui-sref="contactgroups">Contacts</a></li>
+                <li role="presentation" ng-if="user.privileges['users/read']" ng-class="{active: $state.includes('userProfiles') || $state.includes('userProfiles')}"><a ui-sref="userProfiles">User Profiles</a></li>
+                <li role="presentation" ui-sref-active="active"><a ui-sref="about">About</a></li>
+            </ul>
+            <div ng-show="user.tokenId" style="position: absolute; top: 0px; right:0px;">
+                <div class="username">{{user.name}} ({{user.uid}})</div>
+                <div><a ng-click="logout()" >Sign out</a></div>
+            </div>
+            <div ui-view ></div>
+        </nav>
+
+
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<div class="margin"><p class="lead">ContactList Resources</p><ul>
+        <li><a href="https://backstage.forgerock.com/#!/docs/openam/13/dev-guide" target="_blank">OpenAM 13 Developer's Guide</a></li>
+        <li><a href="http://oauth.net/documentation/" target="_blank">OAuth 2.0 Documentation</a></li>
+        <li><a href="http://openid.net/connect/" target="_blank">OpenID Connect</a></li>
+        <li><a href="https://docs.angularjs.org/api" target="_blank">AngularJS API Docs</a></li>
+        <li><a href="http://api.jquery.com/" target="_blank">jQuery API Docs</a></li>
+        <li><a href="http://getbootstrap.com/components/" target="_blank">Bootstrap Components</a></li>
+    </ul>
+</div>
+<div class="margin">
+    <p class="lead">Token ID</p>
+    <span class="badge">{{user.tokenId}}</span>
+</div>
+<div class="margin"><p class="lead">User's attributes</p>
+    <ul>
+        <li>User id: {{user.uid}}</li>
+        <li>Full name: {{user.name}}</li>
+        <li>First name: {{user.givenName}}</li>
+        <li>Last name: {{user.familyName}}</li>
+        <li>Email: {{user.email}}</li>
+    </ul>
+</div>
+<div class="margin"><p class="lead">Current Privilege Set</p>
+    <ul>
+        <li ng-repeat="privilege in user.privilegeNames">{{privilege}}</li>
+    </ul>
+</div>

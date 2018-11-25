@@ -1,0 +1,27 @@
+<form class="form-horizontal" style="margin-left: 5%; width: 90%">
+    <fieldset>
+        <legend>Create Contact Group</legend>
+        <div class="form-group">
+            <label for="_id" class="col-md-3 col-sm-4 control-label">ID</label>
+            <div class="col-md-9  col-sm-8">
+                <input ng-model="group._id" type="text" pattern="[A-Za-z0-9_\\-]+" class="form-control input-md" id="_id" placeholder="ID" required="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cn" class="col-md-3  col-sm-4 control-label">Display Name</label>
+            <div class="col-md-9  col-sm-8">
+                <input ng-model="group.displayName" type="text" class="form-control input-md" id="cn" placeholder="Display name" required="">
+            </div>
+        </div>
+        <div class="alertContainer">
+            <uib-alert ng-repeat='alert in alerts track by $index' type='{{alert.type}}' close='closeAlert($index)' dismiss-on-timeout="{{alert.dismissOnTimeout}}"> {{alert.msg}} </uib-alert>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3 col-sm-4"></div>
+            <div class="col-md-9 col-sm-8">
+            <button ng-hide="user.privileges['entries/modify'].allowed" type="submit" ng-click="createGroup()" class="btn btn-success">Save changes</button>
+            <button type="submit" ng-click="cancel()" class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

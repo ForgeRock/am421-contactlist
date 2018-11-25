@@ -1,0 +1,28 @@
+
+<div class="flow-row">
+        <section resizable rDirections="['right']" r-flex='true' id="groups">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">Groups</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in groups" ng-class="{active: group.owner === selected.owner && group._id === selected.groupId}" >
+                        <td class="item" ui-sref=".listcontacts({owner:group.owner,groupId:group._id})">{{group.displayName}} </td>
+                        <!-- DONE Ch4L4Ex3: Add conditional rendering to the following td element which contains the "Edit Contact Group" icon. -->
+                        <!-- DONE Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']" -->
+                        <td class="edit" ng-if="resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']"><a ui-sref=".edit({owner:group.owner,groupId:group._id})" title="Edit Contact Group"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    </tr>
+                    <!-- DONE Ch4L4Ex3: Add conditional rendering to the following tr element which contains the "Add Contact Group" button. -->
+                    <!-- DONE Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/create']" -->
+                    <tr ng-if="resourceIsOwnedByCurrentUser || user.privileges['contact-groups/create']">
+                        <td colspan="3" style="text-align: left"><button type="button" ui-sref=".create" class="btn btn-sm btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Contact Group&nbsp;</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div class="flow-row" ui-view="">
+        </div>
+    </div>
+</div>

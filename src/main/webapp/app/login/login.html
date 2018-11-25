@@ -1,0 +1,27 @@
+<div class="login-page page">
+    <div class="container">
+        <form class="form-signin form">
+            <h2 class="form-signin-heading" ng-hide="choiceCallback">Login</h2>
+            <h2 class="form-signin-heading" ng-show="choiceCallback">Select Role for this session.</h2>
+            <!-- DONE Ch4L2Ex2: Check how the username and password fields are shown/hidden based on the existence of the choiceCallback object in the scope. -->
+            <input ng-hide="choiceCallback" ng-model="username" iname="username" type="text" class="form-control" placeholder="Username">
+            <input ng-hide="choiceCallback" ng-model="password" name="password" type="password" class="form-control" placeholder="Password">
+            <!-- DONE Ch4L2Ex2: Check how the $scope.choiceCallback.selectableRoles array is rendered. -->
+            <div ng-repeat="role in choiceCallback.selectableRoles">
+                <button class="btn btn-primary btn-large form-control space-between" type="submit" ng-click="loginAs(role)">{{role.label}}</button>
+            </div>
+            <div class="alert alert-success animated fadeIn message" ng-show="message">{{message}}</div>
+            <div class="alert alert-danger animated fadeIn message" ng-show="error">{{error}}</div>
+            <div style="text-align: right">
+                <!-- DONE Ch4L3Ex3: Provide a link to the forgotten password functionality. Uncomment the following link -->
+                <a ng-hide="choiceCallback" ui-sref="forgottenPassword" class="pull-left"> I forgot my password</a>
+                <button ng-hide="choiceCallback" class="btn btn-large btn-primary" type="submit" ng-click="login()">Sign in</button>
+
+                <!-- DONE Ch5L1Ex3: Provide a new button to start the OpenID Connect authentication process. Uncomment the following button definition. -->                
+                <button ng-hide="choiceCallback" class="btn btn-success space-between" type="submit" ng-click="loginWithOAuth2()">
+                    Sign in with OpenID Connect</button>
+            </div>
+
+        </form>
+    </div>
+</div>

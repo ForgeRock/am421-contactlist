@@ -1,0 +1,19 @@
+<section resizable rDirections="['right']" r-flex='true' id="contacts">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="2">Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="contact in contacts"  ng-class="{active: contact._id === selected.contactId}">
+                <td class="item" ui-sref=".details({contactId:contact._id})">{{contact.firstName}} {{contact.lastName}}</td>
+                <td class="edit" ng-if="resourceIsOwnedByCurrentUser || user.privileges['contacts/modify']"><a ui-sref=".details.edit({contactId:contact._id})" title="Edit Contact"><span class="glyphicon glyphicon-edit"></span></a></td>
+            </tr>
+            <tr ng-if="resourceIsOwnedByCurrentUser || user.privileges['contacts/create']">
+                <td colspan="2" style="text-align: left"><button type="button" ui-sref=".create" class="btn btn-sm btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Contact&nbsp;</button></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section class="align-top" ui-view="details" id="details"></section>

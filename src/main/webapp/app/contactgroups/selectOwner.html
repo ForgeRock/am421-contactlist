@@ -1,0 +1,19 @@
+<div class="flow-row">
+    <section ng-if="user.privileges['contact-groups/read']" resizable rDirections="['right']" r-flex='true' id="userProfiles">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Owners</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="userProfile in userProfiles" ng-class="{active: userProfile._id === selected.owner}" >
+                    <td class="item" ui-sref=".listgroups({owner:userProfile._id})">{{userProfile._id}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <div class="flow-row" ui-view="">
+    </div>
+</div>
+</div>
