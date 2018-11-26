@@ -1,18 +1,15 @@
 package com.forgerock.edu.contactlist.uma;
 
-import com.forgerock.edu.contactlist.rest.security.tokenstore.Identity;
 import com.forgerock.edu.contactlist.rest.security.tokenstore.Token;
 import com.forgerock.edu.contactlist.rest.security.tokenstore.TokenManager;
 import com.forgerock.edu.contactlist.rest.security.tokenstore.UMAConstants;
 import com.forgerock.edu.contactlist.util.RestClient;
 import com.forgerock.edu.contactlist.util.JsonUtil;
-import java.io.StringReader;
 import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.BadRequestException;
@@ -41,7 +38,7 @@ public class UMAClient {
     private final RestClient httpClient;
 
     public final static String UMA_DISCOVERY_ENDPOINT
-            = "http://login.example.com:18080/openam/uma/.well-known/uma-configuration";
+            = "http://login.example.com:18080/am/uma/.well-known/uma-configuration";
 
     public UMAClient() {
         httpClient = new RestClient(LOGGER);
