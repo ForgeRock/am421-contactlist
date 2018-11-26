@@ -4,14 +4,18 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th colspan="2">Groups</th>
+                        <th colspan="3">Groups</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="group in groups" ng-class="{active: group.owner === selected.owner && group._id === selected.groupId}" >
-                        <td class="item" ui-sref=".listcontacts({owner:group.owner,groupId:group._id})">{{group.displayName}} </td>
+                        <td class="item" ui-sref=".listcontacts({owner:group.owner,groupId:group._id})">
+                            {{group.displayName}}
+                            <!-- DONE Ch6L1Ex2: investigate the following code, which renders the manage sharing icon conditionally: resourceSetId is assigned to a contact group if it is already shared. -->
+                            <a ng-if="resourceIsOwnedByCurrentUser && group.resourceSetId" ng-click="manageSharing(group)" title="Manage Sharing for Contact Group"><span class="glyphicon glyphicon-share-alt"></span></a>
+                        </td>
                         <!-- DONE Ch4L4Ex3: Add conditional rendering to the following td element which contains the "Edit Contact Group" icon. -->
-                        <!-- DONE Ch4L4Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']" -->
+                        <!-- DONE Ch4L4Ex3: Ex3: Hint: Use ng-if directive with the following expression: "resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']" -->
                         <td class="edit" ng-if="resourceIsOwnedByCurrentUser || user.privileges['contact-groups/modify']"><a ui-sref=".edit({owner:group.owner,groupId:group._id})" title="Edit Contact Group"><span class="glyphicon glyphicon-edit"></span></a></td>
                     </tr>
                     <!-- DONE Ch4L4Ex3: Add conditional rendering to the following tr element which contains the "Add Contact Group" button. -->

@@ -1,6 +1,9 @@
 package com.forgerock.edu.contactlist.rest.security.filter;
 
+import com.forgerock.edu.contactlist.rest.auth.User;
+import com.forgerock.edu.contactlist.rest.security.ContactListPrincipal;
 import com.forgerock.edu.contactlist.rest.security.ContactListSecurityContext;
+import com.forgerock.edu.contactlist.util.FilterUtil;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,12 +39,23 @@ public class ResourceOwnerCalculatorFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         LOGGER.log(Level.FINE, "ResourceOwnerCalculatorFilter started");
         SecurityContext securityContext = requestContext.getSecurityContext();
+        if (!(securityContext instanceof ContactListSecurityContext)) {
+            securityContext = new ContactListSecurityContext(
+                    new ContactListPrincipal(
+                            User.builder().uid("anonymous").build(), 
+                            FilterUtil.extractBearerToken(requestContext)),
+                    true, "anonymous");
+            requestContext.setSecurityContext(securityContext);
+        }
+        
         if (securityContext instanceof ContactListSecurityContext) {
             LOGGER.log(Level.FINE, "Found ContactListSecurityContext");
             ContactListSecurityContext sc = (ContactListSecurityContext) securityContext;
             boolean resourceOwner = isResourceOwner(requestContext.getUriInfo(),
                     sc.getUserPrincipal().getName());
-            sc.setResourceOwner(resourceOwner);
+            if (resourceOwner) {
+                sc.addExtraRole("resource-owner");
+            }
         }
     }
 

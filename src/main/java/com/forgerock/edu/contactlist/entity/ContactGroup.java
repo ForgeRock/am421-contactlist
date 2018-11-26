@@ -44,10 +44,18 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
         this.displayName = displayName;
     }
 
+    /**
+     * Returns the assigned UMA resource_set_id.
+     * @return the assigned UMA resource_set_id
+     */
     public String getResourceSetId() {
         return resourceSetId;
     }
 
+    /**
+     * Assigns the UMA resource_set_id to this contact group.
+     * @param resourceSetId 
+     */
     public void setResourceSetId(String resourceSetId) {
         this.resourceSetId = resourceSetId;
     }
@@ -62,6 +70,7 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
     protected void buildEntry(EntryBuilder builder) {
         builder
                 .addAttribute("displayName", displayName)
+                //The UMA resource_set_id is stored in an LDAP attribute called "umaLabelResourceSet"
                 .addAttribute("umaLabelResourceSet", resourceSetId);
     }
 

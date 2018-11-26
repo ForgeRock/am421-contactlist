@@ -44,7 +44,7 @@ public class ContactResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"resource-owner", "contacts/read"})
+    @RolesAllowed({"resource-owner", "contacts/read", "uma_view", "uma_manage"})
     public Response get(@HeaderParam("If-None-Match") String revision) {
         if (contact.getRevision().equals(revision)) {
             return Response.notModified().header("ETag", contact.getRevision())
@@ -58,7 +58,7 @@ public class ContactResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"resource-owner", "contacts/modify"})
+    @RolesAllowed({"resource-owner", "contacts/modify", "uma_manage"})
     public Response modifyContact(JsonObject groupObject, @HeaderParam("If-Match") String revision) throws ErrorResultException {
         Contact changedContact = new Contact(contact);
         changedContact.setJsonObject(groupObject);
@@ -93,7 +93,7 @@ public class ContactResource {
     
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"resource-owner", "contacts/delete"})
+    @RolesAllowed({"resource-owner", "contacts/delete", "uma_manage"})
     public Response deleteContact(@HeaderParam("If-Match") String revision) throws ErrorResultException {
         if (revision != null && !Objects.equals(group.getRevision(), revision)) {
             throw new OptimisticLockException(group.getRevision(), revision,

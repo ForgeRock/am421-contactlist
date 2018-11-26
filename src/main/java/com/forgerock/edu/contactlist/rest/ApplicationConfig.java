@@ -15,12 +15,16 @@ import com.forgerock.edu.contactlist.rest.contact.ContactGroupsResource;
 import com.forgerock.edu.contactlist.rest.userprofile.UserProfileDisabledCheckResource;
 import com.forgerock.edu.contactlist.rest.userprofile.UserProfilesResource;
 import com.forgerock.edu.contactlist.rest.exception.ConstraintViolatedExceptionMapper;
+import com.forgerock.edu.contactlist.rest.oauth2.OAuth2HandlerResource;
 import com.forgerock.edu.contactlist.rest.security.filter.LocalLDAPBasedPrivilegeCalculatorFilter;
 import com.forgerock.edu.contactlist.rest.security.filter.OpenAMPolicyEnforcementFilter;
 import com.forgerock.edu.contactlist.rest.security.filter.OpenAMSessionValidatorFilter;
 import com.forgerock.edu.contactlist.rest.security.filter.OpenIDConnectSessionValidatorFilter;
 import com.forgerock.edu.contactlist.rest.security.filter.ResourceOwnerCalculatorFilter;
+import com.forgerock.edu.contactlist.rest.security.filter.ResourceSetIdCalculatorFilter;
 import com.forgerock.edu.contactlist.rest.security.filter.SelectedRoleBasedPrivilegeCalculatorFilter;
+import com.forgerock.edu.contactlist.rest.security.filter.UmaRolesAllowedDynamicFeature;
+import com.forgerock.edu.contactlist.rest.security.filter.UmaRptPrivilegeCalculatorFilter;
 import com.forgerock.edu.contactlist.rest.userprofile.ActiveUserProfilesResource;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.jsonp.JsonProcessingFeature;
@@ -53,6 +57,8 @@ public class ApplicationConfig extends ResourceConfig {
                 //LocalLDAPBasedPrivilegeCalculatorFilter.class,
                 //SelectedRoleBasedPrivilegeCalculatorFilter.class,
                 ResourceOwnerCalculatorFilter.class,
+                ResourceSetIdCalculatorFilter.class,
+                UmaRptPrivilegeCalculatorFilter.class,
 
                 ////////////////////////////////////////////////
                 // Authorization Filters
@@ -61,6 +67,7 @@ public class ApplicationConfig extends ResourceConfig {
                 ////////////////////////////////////////////////
                 // Resources
                 AuthResource.class,
+                OAuth2HandlerResource.class,
                 UserProfileDisabledCheckResource.class,
                 ContactGroupsResource.class,
                 ActiveUserProfilesResource.class,
@@ -79,7 +86,7 @@ public class ApplicationConfig extends ResourceConfig {
         ////////////////////////////////////////////////////////
         //       Features
         this
-                .register(RolesAllowedDynamicFeature.class)
+                .register(UmaRolesAllowedDynamicFeature.class)
                 .register(JsonProcessingFeature.class)
                 .register(JacksonFeature.class);
     }

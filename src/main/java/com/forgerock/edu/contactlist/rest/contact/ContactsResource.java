@@ -45,7 +45,7 @@ public class ContactsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"resource-owner", "contacts/create"})
+    @RolesAllowed({"resource-owner", "contacts/create", "uma_manage"})
     public Response addContact(JsonObject contactJSON, @Context UriInfo uriInfo) throws ErrorResultException {
         ContactId contactId = new ContactId(group.getId());
         Contact contact = new Contact(contactId);
@@ -70,7 +70,7 @@ public class ContactsResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"resource-owner", "contacts/read"})
+    @RolesAllowed({"resource-owner", "contacts/read", "uma_view", "uma_manage"})
     public JsonArray getContactList() throws ErrorResultException, ErrorResultIOException, SearchResultReferenceIOException {
         return new ContactDAO(connectionFactory)
                 .findAllByParentId(group.getId())

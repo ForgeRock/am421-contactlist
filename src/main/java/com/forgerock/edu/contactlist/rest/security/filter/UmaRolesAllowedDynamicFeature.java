@@ -1,6 +1,11 @@
 package com.forgerock.edu.contactlist.rest.security.filter;
 
+import com.forgerock.edu.contactlist.rest.security.ContactListSecurityContext;
 import com.forgerock.edu.contactlist.rest.exception.NotAuthorizedException;
+import com.forgerock.edu.contactlist.rest.security.tokenstore.TokenManager;
+import com.forgerock.edu.contactlist.uma.PermissionRequest;
+import com.forgerock.edu.contactlist.uma.PermissionTicket;
+import com.forgerock.edu.contactlist.uma.UMAClient;
 import java.io.IOException;
 import javax.annotation.Priority;
 import javax.annotation.security.DenyAll;
@@ -13,13 +18,17 @@ import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import org.glassfish.jersey.server.model.AnnotatedMethod;
 
 /**
  *
  * @author vrg
  */
-public class RolesAllowedDynamicFeature implements DynamicFeature {
+public class UmaRolesAllowedDynamicFeature implements DynamicFeature {
+
+    private static final UMAClient umaClient = new UMAClient();
+    private static final TokenManager tokenManager = TokenManager.getInstane();
 
     @Override
     public void configure(final ResourceInfo resourceInfo, final FeatureContext configuration) {
@@ -71,13 +80,43 @@ public class RolesAllowedDynamicFeature implements DynamicFeature {
         @Override
         public void filter(final ContainerRequestContext requestContext) throws IOException {
             if (!denyAll) {
+                SecurityContext sc = requestContext.getSecurityContext();
                 if (rolesAllowed.length > 0 && !isAuthenticated(requestContext)) {
                     throw new NotAuthorizedException(Response.Status.UNAUTHORIZED, "Authenticated session is required.");
                 }
 
                 for (final String role : rolesAllowed) {
-                    if (requestContext.getSecurityContext().isUserInRole(role)) {
+                    if (sc.isUserInRole(role)) {
                         return;
+                    }
+                }
+                if (sc instanceof ContactListSecurityContext) {
+                    ContactListSecurityContext clsc = (ContactListSecurityContext) sc;
+                    String resourceSetId = clsc.getResourceSetId();
+                    if (resourceSetId != null) {
+                        for (String role : rolesAllowed) {
+                            if (role.startsWith("uma_")) {
+                                String umaScopeName = role.substring(4);//cutting down "uma_" prefix
+                                PermissionRequest permRequest
+                                        = PermissionRequest.builder()
+                                        .resourceSetId(resourceSetId)
+                                        .addScope(umaScopeName)
+                                        .build();
+                                PermissionTicket ticket = null;
+                                try {
+                                    ticket = umaClient.permissionRequest(
+                                            tokenManager.getProtectionApiToken().getTokenId(),
+                                            permRequest);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                if (ticket != null) {
+                                    throw new NotAuthorizedException(ticket, "UMA RPT is missing...");
+                                }
+
+                            }
+
+                        }
                     }
                 }
             }

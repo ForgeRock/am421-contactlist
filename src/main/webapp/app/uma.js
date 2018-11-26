@@ -16,6 +16,63 @@ angular
             };
             return oauth2Util;
         })
+        .service('umaInterceptor', function ($q, $injector) {
+            var service = this;
+
+            service.responseError = function (response) {
+                if (response.status == 403 && response.data.ticket) {
+                    var deferred = $q.defer();
+                    var umaService = $injector.get('umaService');
+                    var $http = $injector.get('$http');
+                    umaService.getRPT(response.data.ticket).then(function (rptResponse) {
+                        var rpt = rptResponse.rpt;
+                        response.config.headers.Authorization = "Bearer " + rpt;
+                        console.info("sending the request with the new RPT token: " + JSON.stringify(response.config));
+                        $http(response.config).then(function (response) {
+                            deferred.resolve(response);
+                        }, function (response) {
+                            deferred.reject(response);
+                        }
+                        );
+                    });
+
+                    return deferred.promise;
+                } else {
+                    return $q.reject(response);
+                }
+            };
+        })
+        .config(['$httpProvider', function ($httpProvider) {
+                $httpProvider.interceptors.push('umaInterceptor');
+            }])
+        .factory('umaService', function ($rootScope, $http) {
+            var umaService = {
+                getRPT: function (ticket) {
+
+                    var req = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': "Bearer " + encodeURIComponent($rootScope.user.tokenId)
+                        },
+                        url: "http://login.example.com:8080/openam/uma/authz_request",
+                        data: {
+                            "ticket": ticket
+                        }
+                    };
+                    var rptPromise =
+                            $http(req)
+                            .then(function (response) {
+                                console.log("RPT ticket is: " + JSON.stringify(response));
+                                return response.data;
+                            });
+
+                    return rptPromise;
+                }
+            };
+            return umaService;
+        })
         .factory('oauth2Service', function ($http, $rootScope, oauth2Util) {
             var metaData = null;
             var metaDataPromise = null;

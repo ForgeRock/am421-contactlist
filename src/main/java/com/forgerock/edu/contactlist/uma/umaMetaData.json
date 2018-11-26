@@ -1,0 +1,16 @@
+{
+    "version": "1.0",
+    "issuer": "http://login.example.com:8080/openam/oauth2",
+    "pat_profiles_supported": ["bearer"],
+    "aat_profiles_supported": ["bearer"],
+    "rpt_profiles_supported": ["bearer"],
+    "pat_grant_types_supported": ["implicit", "password", "client_credentials", "authorization_code"],
+    "aat_grant_types_supported": ["implicit", "password", "client_credentials", "authorization_code"],
+    "token_endpoint": "http://login.example.com:8080/openam/oauth2/access_token",
+    "authorization_endpoint": "http://login.example.com:8080/openam/oauth2/authorize",
+    "introspection_endpoint": "http://login.example.com:8080/openam/oauth2/introspect",
+    "resource_set_registration_endpoint": "http://login.example.com:8080/openam/oauth2/resource_set",
+    "permission_registration_endpoint": "http://login.example.com:8080/openam/uma/permission_request",
+    "rpt_endpoint": "http://login.example.com:8080/openam/uma/authz_request",
+    "dynamic_client_endpoint": "http://login.example.com:8080/openam/oauth2/connect/register"
+}

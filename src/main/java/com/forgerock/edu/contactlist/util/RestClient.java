@@ -1,5 +1,6 @@
 package com.forgerock.edu.contactlist.util;
 
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
@@ -92,4 +93,13 @@ public class RestClient {
             throw new RestCallFailedException(response, JsonObject.class);
         }
     }
+
+    public String calculateURL(TargetCreator targetCreator) {
+        URI uri = targetCreator
+                .createTarget(ClientBuilder.newClient())
+                .getUri();
+        logger.log(Level.INFO, "Calculated URI is {0}", uri);
+        return uri.toString();
+    }
+
 }

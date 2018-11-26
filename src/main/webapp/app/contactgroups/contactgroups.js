@@ -111,6 +111,51 @@ angular.module('contactList.contactgroups', [
                                                     });
                                         };
 
+                                        //DONE Ch6L1Ex2: Check the manageSharing function: this is responsible for displaying the resource set sharing page in openam
+                                        var manageSharing = function ($scope, group) {
+                                            var win = window.open('http://login.example.com:8080/openam/XUI/#uma/resources/myresources/all/' + group.resourceSetId, '_blank');
+                                            if (win) {
+                                                //Browser has allowed it to be opened
+                                                win.focus();
+                                            } else {
+                                                //Broswer has blocked it
+                                                alert('Please allow popups for this site');
+                                            }
+                                        };
+
+                                        //DONE Ch6L1Ex2: Check the shareGroup function: it uses the shareGroup function of the contactService
+                                        var shareGroup = function ($scope, group) {
+                                            contactService.shareGroup(group)
+                                                    .then(function (updatedGroup) {
+                                                        console.log("share group succeeded: " + JSON.stringify(updatedGroup));
+                                                        $scope.alerts.push({msg: 'Successfully shared contact group.', type: 'success', dismissOnTimeout: 2000});
+                                                        $scope.updateGroupInList(updatedGroup);
+                                                        $state.go('contactgroups.listgroups.listcontacts', $scope.selected);
+                                                    }, function (response) {
+                                                        if (response.data.startFlowURL) {
+                                                            window.location.href = response.data.startFlowURL;
+                                                        } else {
+                                                            $rootScope.addErrorMessage('Failed to share contact group. (' + response.data.message + ')');
+                                                        }
+                                                    });
+                                        };
+
+                                        var unshareGroup = function ($scope, group) {
+                                            contactService.unshareGroup(group)
+                                                    .then(function (updatedGroup) {
+                                                        console.log("unshare group succeeded: " + JSON.stringify(updatedGroup));
+                                                        $scope.alerts.push({msg: 'Successfully unshared contact group.', type: 'success', dismissOnTimeout: 2000});
+                                                        $scope.updateGroupInList(updatedGroup);
+                                                        $state.go('contactgroups.listgroups.listcontacts', $scope.selected);
+                                                    }, function (response) {
+                                                        if (response.data.startFlowURL) {
+                                                            window.location.href = response.data.startFlowURL;
+                                                        } else {
+                                                            $rootScope.addErrorMessage('Failed to unshare contact group. (' + response.data.message + ')');
+                                                        }
+                                                    });
+                                        };
+
                                         var revertGroup = function ($scope) {
                                             $rootScope.clearAlerts(true);
                                             $scope.loadGroup();
@@ -180,6 +225,9 @@ angular.module('contactList.contactgroups', [
                                             updateGroupInList: updateGroupInList,
                                             deleteGroupFromList: deleteGroupFromList,
                                             loadGroup: loadGroup,
+                                            unshareGroup: unshareGroup,
+                                            shareGroup: shareGroup,
+                                            manageSharing: manageSharing,
                                             saveGroup: saveGroup,
                                             clearGroup: clearGroup,
                                             createGroup: createGroup,
@@ -193,7 +241,7 @@ angular.module('contactList.contactgroups', [
                             })
 
                             .state('contactgroups.listgroups.edit', {
-                                url: '/{groupId:[\\w\\-]{1,}}/edit',
+                                url: '/edit:{groupId:[\\w\\-]{1,}}',
                                 displayName: 'Edit Contact Group',
                                 templateUrl: 'app/contactgroups/editGroup.html',
                                 controller: function ($rootScope, $scope, $state, $stateParams, contactService, groupFunctions, group) {
@@ -214,6 +262,22 @@ angular.module('contactList.contactgroups', [
                                     }
                                 }
 
+                            })
+                            .state('contactgroups.listgroups.edit.share', {
+                                url: '/share',
+                                template: 'x',
+                                controller: function ($scope, $stateParams, group) {
+                                    console.log("contactgroups.share controller " + JSON.stringify($stateParams));
+                                    $scope.shareGroup(group);
+                                }
+                            })
+                            .state('contactgroups.listgroups.edit.unshare', {
+                                url: '/unshare',
+                                template: 'x',
+                                controller: function ($scope, $stateParams, group) {
+                                    console.log("contactgroups.unshare controller " + JSON.stringify($stateParams));
+                                    $scope.unshareGroup(group);
+                                }
                             })
                             .state('contactgroups.listgroups.create', {
                                 templateUrl: 'app/contactgroups/createGroup.html',

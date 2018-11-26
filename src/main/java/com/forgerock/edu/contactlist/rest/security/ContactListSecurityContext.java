@@ -2,6 +2,9 @@ package com.forgerock.edu.contactlist.rest.security;
 
 import com.forgerock.edu.contactlist.rest.auth.User;
 import java.security.Principal;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ws.rs.core.SecurityContext;
 
 /**
@@ -16,6 +19,8 @@ public class ContactListSecurityContext implements SecurityContext {
     private final boolean secure;
     private boolean resourceOwner;
     private final String authenticationScheme;
+    private Set<String> extraRoles = new HashSet<>();
+    private String resourceSetId;
 
     public ContactListSecurityContext(ContactListPrincipal userPrincipal, boolean secure, String authenticationScheme) {
         this.userPrincipal = userPrincipal;
@@ -42,10 +47,8 @@ public class ContactListSecurityContext implements SecurityContext {
      */
     @Override
     public boolean isUserInRole(String role) {
-        if ("resource-owner".equals(role)) {
-            return resourceOwner;
-        }
-        return userPrincipal.getUser().getPrivileges().contains(role);
+        return extraRoles.contains(role)
+                || userPrincipal.getUser().getPrivileges().contains(role);
     }
 
     @Override
@@ -58,12 +61,16 @@ public class ContactListSecurityContext implements SecurityContext {
         return authenticationScheme;
     }
 
-    public void setResourceOwner(boolean resourceOwner) {
-        this.resourceOwner = resourceOwner;
+    public void addExtraRole(String extraRole) {
+        extraRoles.add(extraRole);
     }
 
-    public boolean isResourceOwner() {
-        return resourceOwner;
+    public boolean removeExtraRole(String extraRole) {
+        return extraRoles.remove(extraRole);
+    }
+    
+    public void removeExtraRoles() {
+        extraRoles.clear();
     }
 
     public String getTokenId() {
@@ -73,4 +80,18 @@ public class ContactListSecurityContext implements SecurityContext {
     public User getUser() {
         return userPrincipal.getUser();
     }
+
+    public String getResourceSetId() {
+        return resourceSetId;
+    }
+
+    public void setResourceSetId(String resourceSetId) {
+        this.resourceSetId = resourceSetId;
+    }
+
+    public Set<String> getExtraRoles() {
+        return Collections.unmodifiableSet(extraRoles);
+    }
+    
+    
 }

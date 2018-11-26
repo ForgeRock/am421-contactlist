@@ -135,6 +135,44 @@ angular.module('services.contact', [
                 return contactPromise;
             };
 
+            
+            contactService.doAction = function (group, action) {
+                loginService.customizeHTTP($http);
+                var req = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'If-Match': group._rev
+                    },
+                    url: "rest/owned-groups/" + group.owner + "/" + group._id + "?_action=" + action,
+                    data: group
+                };
+                var contactPromise =
+                        $http(req)
+                        .then(function (response) {
+                            var updatedGroup = response.data;
+                            updatedGroup._rev = response.headers('ETag');
+                            return updatedGroup;
+                        }, function(response) {
+                            if (response.data.errorCode==="USER_PAT_NEEDED") {
+                                var startFlowURL = response.data.message + "?goto=" + encodeURIComponent(window.location.href + "/" + action);
+                                console.log("Starting flow: " + startFlowURL);
+                                response.data.startFlowURL = startFlowURL;
+                            }
+                            throw response;
+                        });
+
+                return contactPromise;
+            };
+            
+            contactService.shareGroup = function (group) {
+                return contactService.doAction(group,"share");
+            };
+            contactService.unshareGroup = function (group) {
+                return contactService.doAction(group,"unshare");
+            };
+
             contactService.getContactsByGroupId = function (id) {
                 var groupPath = id.owner + "/" + id.groupId;
                 var contactsPromise = contactsPromises[groupPath];

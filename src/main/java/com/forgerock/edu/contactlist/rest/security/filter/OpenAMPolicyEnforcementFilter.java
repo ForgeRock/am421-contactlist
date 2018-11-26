@@ -1,7 +1,7 @@
 package com.forgerock.edu.contactlist.rest.security.filter;
 
 import com.forgerock.edu.contactlist.rest.security.ContactListSecurityContext;
-import com.forgerock.edu.contactlist.rest.security.NotAuthorizedException;
+import com.forgerock.edu.contactlist.rest.exception.NotAuthorizedException;
 import com.forgerock.edu.contactlist.util.OpenAMClient;
 import com.forgerock.edu.contactlist.util.OpenAMJsonObject;
 import java.io.IOException;
