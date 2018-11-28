@@ -105,7 +105,8 @@ public class UmaRolesAllowedDynamicFeature implements DynamicFeature {
                                 PermissionTicket ticket = null;
                                 try {
                                     ticket = umaClient.permissionRequest(
-                                            tokenManager.getProtectionApiToken().getTokenId(),
+                                            // tokenManager.getProtectionApiToken().getTokenId(),
+                                            clsc.getResourceOwnerPAToken(),
                                             permRequest);
                                 } catch (Exception ex) {
                                     ex.printStackTrace();

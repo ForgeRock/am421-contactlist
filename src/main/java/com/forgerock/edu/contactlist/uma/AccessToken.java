@@ -61,8 +61,10 @@ public class AccessToken implements JSONEntity {
         tokenId = object.getString("access_token");
         type = object.getString("token_type");
         expiresIn = object.getInt("expires_in", 0);
-        String scopeString = object.getString("scope");
-        scopes = new TreeSet<>(Arrays.asList(scopeString.split("\\s+")));
+        if(object.getJsonString("scope") != null) {
+            String scopeString = object.getString("scope");
+            scopes = new TreeSet<>(Arrays.asList(scopeString.split("\\s+")));
+        }        
         createWrappers();
     }
 

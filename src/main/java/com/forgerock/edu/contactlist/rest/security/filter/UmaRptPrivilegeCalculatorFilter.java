@@ -15,7 +15,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.SecurityContext;
 
-//TODO lab12: Read the javadoc and investigate the code
+//DONE Ch6L1Ex2: Read the javadoc and investigate the code
 /**
  * This filter extracts the {@link ContactListSecurityContext} from the current
  * requestContext and adds extra roles to it based on the RPT token's content.
@@ -54,15 +54,15 @@ public class UmaRptPrivilegeCalculatorFilter implements ContainerRequestFilter {
                 String tokenId = sc.getTokenId();
 
                 try {
-                    JsonObject result = umaClient.introspectToken(tokenId);
+                    JsonObject result = umaClient.introspectToken(sc.getResourceOwnerPAToken(), tokenId);
                     LOGGER.log(Level.INFO, "introspection result {0}", result);
 
-                    if ("requesting_party_token".equals(result.getString("token_type"))) {
+                    if (result.getBoolean("active")) {
                         JsonArray jsonArray = result.getJsonArray("permissions");
                         jsonArray.stream()
                                 .map((v) -> (JsonObject) v)
-                                .filter((o) -> resourceSetId.equals(o.getString("resource_set_id")))
-                                .flatMap((o) -> o.getJsonArray("scopes").stream())
+                                .filter((o) -> resourceSetId.equals(o.getString("resource_id")))
+                                .flatMap((o) -> o.getJsonArray("resource_scopes").stream())
                                 .map((v) -> ((JsonString) v).getString())
                                 .forEach((scope) -> sc.addExtraRole("uma_" + scope));
                         LOGGER.log(Level.INFO, "Now the extra roles are these: {0}", sc.getExtraRoles());

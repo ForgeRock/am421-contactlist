@@ -5,7 +5,7 @@ angular.module('contactList.login', [
 
             $stateProvider
                     .state('login', {
-                        url: "/login?tokenId",
+                        url: "/login?tokenId&id_token",
                         templateUrl: "app/login/login.html",
                         noAuth: true,
                         //DONE Ch5L1Ex3: Inject the oauth2Service into the controller: add a new parameter to this function named oauth2Service
@@ -78,6 +78,8 @@ angular.module('contactList.login', [
                             if (tokenId) {
                                 $rootScope.validateToken(tokenId);
                             }
+                            $rootScope.id_token = $stateParams.id_token;
+                            console.info("Id token: " + $rootScope.id_token);
                         },
                         resolve: {
                             //DONE Ch5L1Ex3: Add a new depencency here to initialize oauth2Service before the login controller starts

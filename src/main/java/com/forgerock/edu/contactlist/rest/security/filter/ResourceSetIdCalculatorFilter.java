@@ -8,6 +8,7 @@ import com.forgerock.edu.contactlist.ldap.LDAPConnectionFactoryImpl;
 import com.forgerock.edu.contactlist.rest.security.ContactListSecurityContext;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Priority;
@@ -18,7 +19,7 @@ import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
-//TODO lab12: Read the javadoc and investigate the code
+//DONE Ch6L1Ex2: Read the javadoc and investigate the code
 /**
  * This filter extracts the {@link ContactListSecurityContext} from the current
  * requestContext and sets the sets the current {@code resource_set_id} in it.
@@ -48,21 +49,22 @@ public class ResourceSetIdCalculatorFilter implements ContainerRequestFilter {
         if (securityContext instanceof ContactListSecurityContext) {
             LOGGER.log(Level.FINE, "Found ContactListSecurityContext");
             ContactListSecurityContext sc = (ContactListSecurityContext) securityContext;
-            String resourceSetId = getResourceSetId(requestContext.getUriInfo());
-            sc.setResourceSetId(resourceSetId);
+            Optional<ContactGroup> contactGroup = getContactGroup(requestContext.getUriInfo());
+            contactGroup.ifPresent( cg -> {
+                sc.setResourceSetId(cg.getResourceSetId());
+                sc.setResourceOwnerPAToken(cg.getResourceOwnerPAToken());
+            });
         }
     }
 
     /**
-     * Extracts the UMA resource_set_id assigned to the current URL.
+     * Determines the ContactGroup assigned to the current URL.
      *
      * @param uriInfo
-     * @return the assigned resource_set_id, or null, if the current resource is
-     * not shared.
-     * 
-     * @see ContactGroup#getResourceSetId()
+     * @return the contact group, or null, if the current resource is
+     * not shared
      */
-    private String getResourceSetId(final UriInfo uriInfo) {
+    private Optional<ContactGroup> getContactGroup(final UriInfo uriInfo) {
         List<PathSegment> segments = uriInfo.getPathSegments();
 
         if (segments.size() > 2
@@ -71,13 +73,14 @@ public class ResourceSetIdCalculatorFilter implements ContainerRequestFilter {
             String groupId = segments.get(2).getPath();
             try {
                 ContactGroup group = dao.findById(new ContactGroupId(new UserId(owner), groupId));
-                return group.getResourceSetId();
+                return Optional.ofNullable(group);
             } catch (Exception ex) {
                 LOGGER.log(Level.WARNING,
                         "Contact group could not be loaded, path: {0}, Ex: {1}",
                         new Object[]{uriInfo.getPath(), ex});
             }
         }
-        return null;
+        return Optional.empty();
     }
+
 }

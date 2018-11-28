@@ -79,7 +79,7 @@ public class UMAResourceSet implements JSONEntity {
                 .add("name", name)
                 .add("icon_uri", iconURI)
                 .add("type", type)
-                .add("scopes", scopes.stream().collect(JsonUtil.toJsonArrayOfStrings()))
+                .add("resource_scopes", scopes.stream().collect(JsonUtil.toJsonArrayOfStrings()))
                 .add("labels", labels.stream().collect(JsonUtil.toJsonArrayOfStrings()))
                 .add("_id", id)
                 .add("_rev", revision)

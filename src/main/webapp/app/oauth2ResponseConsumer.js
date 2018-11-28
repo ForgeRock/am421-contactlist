@@ -48,7 +48,7 @@ $(document).ready(function () {
             console.info("new path: " + newpath + " " + params.access_token);
             //DONE Ch5L1Ex3: Complete the redirection path with the access_token extracted above.
             //DONE Ch5L1Ex3: Hint: Use encodeURIComponent to URLEncode params.access_token
-            window.location.replace(newpath + "#/login?tokenId=" + encodeURIComponent(params.access_token));
+            window.location.replace(newpath + "#/login?tokenId=" + encodeURIComponent(params.access_token) + "&id_token=" + encodeURIComponent(params.id_token) );
         }
     }
 

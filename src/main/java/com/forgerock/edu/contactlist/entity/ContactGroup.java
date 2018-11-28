@@ -17,6 +17,8 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
 
     private String displayName;
     private String resourceSetId;
+    private String resourceOwnerPARefreshToken;
+    private String resourceOwnerPAToken;
 
     public ContactGroup() {
     }
@@ -29,6 +31,8 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
         super(group);
         this.displayName = group.displayName;
         this.resourceSetId = group.resourceSetId;
+        this.resourceOwnerPARefreshToken = group.resourceOwnerPARefreshToken;
+        this.resourceOwnerPAToken = group.resourceOwnerPAToken;
     }
 
     @Override
@@ -60,10 +64,28 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
         this.resourceSetId = resourceSetId;
     }
 
+    public String getResourceOwnerPARefreshToken() {
+        return resourceOwnerPARefreshToken;
+    }
+
+    public void setResourceOwnerPARefreshToken(String resourceOwnerPARefreshToken) {
+        this.resourceOwnerPARefreshToken = resourceOwnerPARefreshToken;
+    }
+
+    public String getResourceOwnerPAToken() {
+        return resourceOwnerPAToken;
+    }
+
+    public void setResourceOwnerPAToken(String resourceOwnerPAToken) {
+        this.resourceOwnerPAToken = resourceOwnerPAToken;
+    }
+
     @Override
     protected void parseEntry(SimplifiedEntry entry) {
         this.displayName = entry.getFirstValueOfAttributeAsString("displayName");
         this.resourceSetId = entry.getFirstValueOfAttributeAsString("umaLabelResourceSet");
+        this.resourceOwnerPARefreshToken = entry.getFirstValueOfAttributeAsString("umaResourceOwnerPARefreshToken");
+        this.resourceOwnerPAToken = entry.getFirstValueOfAttributeAsString("umaResourceOwnerPAToken");
     }
 
     @Override
@@ -71,7 +93,9 @@ public class ContactGroup extends LDAPEntryBase implements JSONEntity {
         builder
                 .addAttribute("displayName", displayName)
                 //The UMA resource_set_id is stored in an LDAP attribute called "umaLabelResourceSet"
-                .addAttribute("umaLabelResourceSet", resourceSetId);
+                .addAttribute("umaLabelResourceSet", resourceSetId)
+                .addAttribute("umaResourceOwnerPARefreshToken", resourceOwnerPARefreshToken)
+                .addAttribute("umaResourceOwnerPAToken", resourceOwnerPAToken);
     }
 
     @Override

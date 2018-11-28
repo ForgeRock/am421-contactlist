@@ -33,12 +33,13 @@ public class UMAClient {
     private String tokenEndpoint = null;
     private String resourceSetRegistrationEndpoint = null;
     private String permissionRegistrationEndpoint = null;
-    private String rptEndpoint = null;
+//    private String rptEndpoint = null;
     private final JsonObject metaData;
     private final RestClient httpClient;
 
     public final static String UMA_DISCOVERY_ENDPOINT
-            = "http://login.example.com:18080/am/uma/.well-known/uma-configuration";
+            = "http://login.example.com:18080/am/uma/.well-known/uma2-configuration";
+    public final static String UMA_TICKET_GRANT = "urn:ietf:params:oauth:grant-type:uma-ticket";
 
     public UMAClient() {
         httpClient = new RestClient(LOGGER);
@@ -46,10 +47,9 @@ public class UMAClient {
         authorizationEndpoint = metaData.getString("authorization_endpoint");
         introspectionEndpoint = metaData.getString("introspection_endpoint");
         tokenEndpoint = metaData.getString("token_endpoint");
-        resourceSetRegistrationEndpoint = metaData.getString("resource_set_registration_endpoint");
-        permissionRegistrationEndpoint = metaData.getString("permission_registration_endpoint");
-        introspectionEndpoint = metaData.getString("introspection_endpoint");
-        rptEndpoint = metaData.getString("rpt_endpoint");
+        resourceSetRegistrationEndpoint = metaData.getString("resource_registration_endpoint");
+        permissionRegistrationEndpoint = metaData.getString("permission_endpoint");
+//        rptEndpoint = metaData.getString("rpt_endpoint");
     }
 
     private RuntimeException handleException(BadRequestException ex, String message) {
@@ -98,6 +98,8 @@ public class UMAClient {
 
     public PermissionTicket permissionRequest(String protectionApiToken,
             PermissionRequest permissionRequest) {
+        LOGGER.info("Permission request: " + permissionRequest + " PAT: " + protectionApiToken);
+        
         return httpClient.sendRequestWithBody(
                 "permissionRequest",
                 "POST",
@@ -121,29 +123,29 @@ public class UMAClient {
         );
     }
 
-    public RequestingPartyToken authorizeRequest(String authorizationApiToken, PermissionTicket ticket) {
-        return httpClient.sendRequestWithBody(
-                "authorizeRequest",
-                "POST",
-                // Defining target URL
-                (client) -> client.target(rptEndpoint),
-                // Defining headers
-                (builder) -> {
-                    return builder
-                    .request(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + authorizationApiToken);
-                },
-                () -> { // Defining request body
-                    return Entity.entity(ticket.getJsonObject(),
-                            MediaType.APPLICATION_JSON);
-                },
-                (rawResponse) -> { // Handling successful response
-                    return RequestingPartyToken.builder()
-                    .jsonState(rawResponse.readEntity(JsonObject.class))
-                    .build();
-                }
-        );
-    }
+//    public RequestingPartyToken authorizeRequest(String authorizationApiToken, PermissionTicket ticket) {
+//        return httpClient.sendRequestWithBody(
+//                "authorizeRequest",
+//                "POST",
+//                // Defining target URL
+//                (client) -> client.target(rptEndpoint),
+//                // Defining headers
+//                (builder) -> {
+//                    return builder
+//                    .request(MediaType.APPLICATION_JSON)
+//                    .header("Authorization", "Bearer " + authorizationApiToken);
+//                },
+//                () -> { // Defining request body
+//                    return Entity.entity(ticket.getJsonObject(),
+//                            MediaType.APPLICATION_JSON);
+//                },
+//                (rawResponse) -> { // Handling successful response
+//                    return RequestingPartyToken.builder()
+//                    .jsonState(rawResponse.readEntity(JsonObject.class))
+//                    .build();
+//                }
+//        );
+//    }
 
     public List<String> getResourceSetIds(String protectionApiToken) {
         return httpClient.sendRequest(
@@ -211,6 +213,22 @@ public class UMAClient {
                 (rawResponse) -> rawResponse.readEntity(JsonObject.class)
         );
 
+    }
+    public JsonObject introspectToken(String authorizationToken, String token) {
+        return httpClient.sendRequest(
+                "introspectToken",
+                "GET",
+                // Defining target URL
+                (client) -> client.target(introspectionEndpoint)
+                        .queryParam("token", token),
+                (builder) -> { // Defining headers
+                    return builder
+                            .request(MediaType.APPLICATION_JSON)
+                            .header("Authorization", "Bearer " + authorizationToken);
+                },
+                // Handling successful response
+                (rawResponse) -> rawResponse.readEntity(JsonObject.class)
+        );
     }
 
     public boolean unregisterResourceSet(String protectionApiToken, String resourceSetId, String eTag) {
@@ -343,6 +361,35 @@ public class UMAClient {
                     return Entity.form(new Form()
                             .param("grant_type", "client_credentials")
                             .param("scope", scope));
+                },
+                (rawResponse) -> { // Handling successful response
+                    return AccessToken.builder()
+                    .jsonState(rawResponse.readEntity(JsonObject.class))
+                    .build();
+                }
+        );
+    }
+    public AccessToken getRPT4Ticket(String ticket, String claimToken, String claimTokenFormat) {
+        String basicToken = Base64.getEncoder()
+                .encodeToString((UMAConstants.RESOURCE_SERVER_IDENTITY.getUserId() + ":" + UMAConstants.RESOURCE_SERVER_SECRET).getBytes());
+
+        return httpClient.sendRequestWithBody(
+                "RPTRequest ",
+                "POST",
+                // Defining target URL
+                (client) -> client.target(tokenEndpoint),
+                // Defining headers
+                (builder) -> {
+                    return builder
+                        .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .header("Authorization", "Basic " + basicToken);
+                },
+                () -> { // Defining request body
+                    return Entity.form(new Form()
+                            .param("grant_type", UMA_TICKET_GRANT)
+                            .param("ticket", ticket)
+                            .param("claim_token", claimToken)
+                            .param("claim_token_format", claimTokenFormat));
                 },
                 (rawResponse) -> { // Handling successful response
                     return AccessToken.builder()

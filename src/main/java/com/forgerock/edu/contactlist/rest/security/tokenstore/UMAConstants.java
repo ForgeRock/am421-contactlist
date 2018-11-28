@@ -14,5 +14,5 @@ public class UMAConstants {
             .build();
 
     public final static String RESOURCE_SERVER_SECRET = "cangetinBackend";
-    public final static String RESOURCE_SERVER_REDIRECT_URI = "http://app.test:18080/contactlist/rest/oauth2/responseHandler";
+    public final static String RESOURCE_SERVER_REDIRECT_URI = "http://app.test:8080/contactlist/rest/oauth2/responseHandler";
 }

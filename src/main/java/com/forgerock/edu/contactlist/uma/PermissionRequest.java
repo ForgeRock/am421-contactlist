@@ -42,8 +42,8 @@ public class PermissionRequest implements JSONEntity {
     @Override
     public JsonObject getJsonObject() {
         JsonObject json = new NullSafeJsonObjectBuilder()
-                .add("resource_set_id", resourceSetId)
-                .add("scopes", scopes.stream().collect(JsonUtil.toJsonArrayOfStrings()))
+                .add("resource_id", resourceSetId)
+                .add("resource_scopes", scopes.stream().collect(JsonUtil.toJsonArrayOfStrings()))
                 .build();
         return json;
     }

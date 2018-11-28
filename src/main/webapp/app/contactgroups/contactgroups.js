@@ -113,7 +113,7 @@ angular.module('contactList.contactgroups', [
 
                                         //DONE Ch6L1Ex2: Check the manageSharing function: this is responsible for displaying the resource set sharing page in openam
                                         var manageSharing = function ($scope, group) {
-                                            var win = window.open('http://login.example.com:8080/openam/XUI/#uma/resources/myresources/all/' + group.resourceSetId, '_blank');
+                                            var win = window.open('http://login.example.com:18080/am/XUI/#uma/resources/myresources/all/' + group.resourceSetId, '_blank');
                                             if (win) {
                                                 //Browser has allowed it to be opened
                                                 win.focus();

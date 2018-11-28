@@ -123,12 +123,14 @@ public class ContactGroupResource {
                         .type("http://app.test/contactlist/ContactGroup")
                         .addScope("view")
                         .addScope("manage")
-                        .iconURI("http://app.test:18080/contactlist/images/contactgroup.png")
+                        .iconURI("http://app.test:8080/contactlist/images/contactgroup.png")
                         .build();
 
                 UMAResourceSet newRS = new UMAClient().registerResourceSet(patForUser.getTokenId(), resourceSet);
                 ContactGroup changedGroup = new ContactGroup(group);
                 changedGroup.setResourceSetId(newRS.getId());
+                changedGroup.setResourceOwnerPAToken(patForUser.getTokenId());
+
                 return changeGroup(changedGroup, dao);
             } else {
                 return userPatNeeded(uriInfo);
@@ -171,6 +173,7 @@ public class ContactGroupResource {
                         umaClient.unregisterResourceSet(patForUser.getTokenId(),
                                 resourceSet.getId(), resourceSet.getRevision());
                         changedGroup.setResourceSetId(null);
+                        changedGroup.setResourceOwnerPAToken(null);
                     }
                     return changeGroup(changedGroup, dao);
                 } else {

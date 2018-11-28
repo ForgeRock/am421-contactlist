@@ -21,6 +21,7 @@ public class ContactListSecurityContext implements SecurityContext {
     private final String authenticationScheme;
     private Set<String> extraRoles = new HashSet<>();
     private String resourceSetId;
+    private String resourceOwnerPAToken;
 
     public ContactListSecurityContext(ContactListPrincipal userPrincipal, boolean secure, String authenticationScheme) {
         this.userPrincipal = userPrincipal;
@@ -87,6 +88,14 @@ public class ContactListSecurityContext implements SecurityContext {
 
     public void setResourceSetId(String resourceSetId) {
         this.resourceSetId = resourceSetId;
+    }
+
+    public String getResourceOwnerPAToken() {
+        return resourceOwnerPAToken;
+    }
+
+    public void setResourceOwnerPAToken(String resourceOwnerPAToken) {
+        this.resourceOwnerPAToken = resourceOwnerPAToken;
     }
 
     public Set<String> getExtraRoles() {

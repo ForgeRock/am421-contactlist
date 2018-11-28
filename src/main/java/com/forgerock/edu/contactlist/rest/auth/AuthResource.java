@@ -9,6 +9,8 @@ import com.forgerock.edu.contactlist.rest.exception.InvalidTokenIdException;
 import com.forgerock.edu.contactlist.rest.SuccessMessage;
 import com.forgerock.edu.contactlist.rest.security.ContactListPrincipal;
 import com.forgerock.edu.contactlist.rest.security.filter.Protected;
+import com.forgerock.edu.contactlist.uma.AccessToken;
+import com.forgerock.edu.contactlist.uma.UMAClient;
 import com.forgerock.edu.contactlist.util.JsonUtil;
 import java.security.Principal;
 import javax.inject.Singleton;
@@ -21,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
@@ -135,6 +138,24 @@ public class AuthResource {
         } else {
             throw new InvalidTokenIdException();
         }
+    }
+
+    /**
+     * Get's an RPT for the given ticket and claim_token.
+     *
+     * @param ticket
+     * @param claimToken
+     * @param claimTokenFormat
+     * @return
+     */
+    @Path("uma/obtain_rpt")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public AccessToken obtainRPT(@QueryParam("ticket") String ticket,
+                                 @QueryParam("claim_token") String claimToken,
+                                 @QueryParam("claim_token_format") String claimTokenFormat) {
+        AccessToken accessToken = (new UMAClient()).getRPT4Ticket(ticket, claimToken, claimTokenFormat);
+        return accessToken;
     }
 
 }
