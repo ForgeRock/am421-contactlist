@@ -19,7 +19,7 @@ import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
-//DONE Ch6L1Ex2: Read the javadoc and investigate the code
+//TODO Ch6L1Ex2: Read the javadoc and investigate the code
 /**
  * This filter extracts the {@link ContactListSecurityContext} from the current
  * requestContext and sets the sets the current {@code resource_set_id} in it.

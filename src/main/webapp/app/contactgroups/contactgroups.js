@@ -111,7 +111,7 @@ angular.module('contactList.contactgroups', [
                                                     });
                                         };
 
-                                        //DONE Ch6L1Ex2: Check the manageSharing function: this is responsible for displaying the resource set sharing page in openam
+                                        //TODO Ch6L1Ex2: Check the manageSharing function: this is responsible for displaying the resource set sharing page in openam
                                         var manageSharing = function ($scope, group) {
                                             var win = window.open('http://login.example.com:18080/am/XUI/#uma/resources/myresources/all/' + group.resourceSetId, '_blank');
                                             if (win) {
@@ -123,7 +123,7 @@ angular.module('contactList.contactgroups', [
                                             }
                                         };
 
-                                        //DONE Ch6L1Ex2: Check the shareGroup function: it uses the shareGroup function of the contactService
+                                        //TODO Ch6L1Ex2: Check the shareGroup function: it uses the shareGroup function of the contactService
                                         var shareGroup = function ($scope, group) {
                                             contactService.shareGroup(group)
                                                     .then(function (updatedGroup) {

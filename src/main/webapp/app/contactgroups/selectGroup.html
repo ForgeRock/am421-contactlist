@@ -11,7 +11,7 @@
                     <tr ng-repeat="group in groups" ng-class="{active: group.owner === selected.owner && group._id === selected.groupId}" >
                         <td class="item" ui-sref=".listcontacts({owner:group.owner,groupId:group._id})">
                             {{group.displayName}}
-                            <!-- DONE Ch6L1Ex2: investigate the following code, which renders the manage sharing icon conditionally: resourceSetId is assigned to a contact group if it is already shared. -->
+                            <!-- TODO Ch6L1Ex2: investigate the following code, which renders the manage sharing icon conditionally: resourceSetId is assigned to a contact group if it is already shared. -->
                             <a ng-if="resourceIsOwnedByCurrentUser && group.resourceSetId" ng-click="manageSharing(group)" title="Manage Sharing for Contact Group"><span class="glyphicon glyphicon-share-alt"></span></a>
                         </td>
                         <!-- DONE Ch4L4Ex3: Add conditional rendering to the following td element which contains the "Edit Contact Group" icon. -->

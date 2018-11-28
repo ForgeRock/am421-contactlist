@@ -15,7 +15,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.SecurityContext;
 
-//DONE Ch6L1Ex2: Read the javadoc and investigate the code
+//TODO Ch6L1Ex2: Read the javadoc and investigate the code
 /**
  * This filter extracts the {@link ContactListSecurityContext} from the current
  * requestContext and adds extra roles to it based on the RPT token's content.

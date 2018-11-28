@@ -20,7 +20,7 @@
                 <button ng-hide="user.privileges['entries/modify'].allowed" type="submit" ng-click="saveGroup()" class="btn btn-success">Save changes</button>
                 <button type="submit" ng-click="revertGroup(group)" class="btn btn-info">Revert changes</button>
                 <button type="submit" ng-click="deleteGroup(group)" class="btn btn-danger">Delete contact group</button>
-                <!-- DONE Ch6L1Ex2: Check the Share and Remove sharing buttons: these are calling the shareGroup and unshareGroup functions, respectively. 
+                <!-- TODO Ch6L1Ex2: Check the Share and Remove sharing buttons: these are calling the shareGroup and unshareGroup functions, respectively. 
                                  Check contactgroups.js for the implementation. -->
                 <button ng-if="resourceIsOwnedByCurrentUser && !group.resourceSetId" type="submit" 
                         ng-click="shareGroup(group)" class="btn btn-primary">Share it with others</button>

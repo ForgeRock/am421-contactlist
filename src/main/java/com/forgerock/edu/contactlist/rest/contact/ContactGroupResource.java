@@ -64,7 +64,7 @@ public class ContactGroupResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    //DONE Ch6L1Ex2: Check "uma_view" as an allowed role.
+    //TODO Ch6L1Ex2: Check "uma_view" as an allowed role.
     @RolesAllowed({"resource-owner", "contact-groups/read", "uma_view"})
     public Response get(@HeaderParam("If-None-Match") String revision) {
         if (group.getRevision().equals(revision)) {
