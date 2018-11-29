@@ -160,6 +160,7 @@ public class OpenAMClient {
                 .request(MediaType.APPLICATION_JSON)
                 .header("X-OpenAM-Username", username)
                 .header("X-OpenAM-Password", password)
+                .header("Accept-API-Version", "resource=2.0, protocol=1.0")
                 .post(entity, JsonObject.class);
 
         LOGGER.log(Level.FINE, "Authentication response is: {0}", evaluationResponse);
@@ -194,6 +195,7 @@ public class OpenAMClient {
             JsonObject result = target
                     .request(MediaType.APPLICATION_JSON)
                     .header("iPlanetDirectoryPro", privilegedTokenId)
+                    .header("Accept-API-Version", "resource=1.2")
                     .post(entity, JsonObject.class);
 
             LOGGER.log(Level.FINE, "GetSessionProperty raw result: {0}", result);
