@@ -195,6 +195,7 @@ public class OpenAMClient {
             JsonObject result = target
                     .request(MediaType.APPLICATION_JSON)
                     .header("iPlanetDirectoryPro", privilegedTokenId)
+                    .header("Accept-API-Version", "resource=1.2")
                     .post(entity, JsonObject.class);
 
             LOGGER.log(Level.FINE, "GetSessionProperty raw result: {0}", result);
