@@ -45,8 +45,8 @@ angular
                         "client_id": "contactList",
                         "realm": "/",
                         //DONE Ch5L1Ex3: Request the following scopes: openid,profile,email and contactlist-privileges. Separate them with spaces.
-                        //TODO Ch6L1Ex2: Add two new scopes: uma_authorization and uma_protection. Separate them with spaces.
-                        "scope": "openid profile email contactlist-privileges uma_authorization uma_protection",
+                        //TODO Ch6L1Ex2: Add new scope: uma_protection. Separate them with spaces.
+                        "scope": "openid profile email contactlist-privileges uma_protection",
                         //DONE Ch5L1Ex3: Set redirect URI: http://app.test:8080/contactlist/oauth2ResponseConsumer.html
                         "redirect_uri": "http://app.test:8080/contactlist/oauth2ResponseConsumer.html",
                         "state": oauth2Util.generateRandomString(16), //random state
