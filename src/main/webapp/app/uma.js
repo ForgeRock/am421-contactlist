@@ -104,7 +104,7 @@ angular
                         "response_type": "token id_token",
                         "client_id": "contactList",
                         "realm": "/",
-                        "scope": "openid profile email contactlist-privileges uma_authorization uma_protection",
+                        "scope": "openid profile email contactlist-privileges uma_protection",
                         "redirect_uri": "http://app.test:8080/contactlist/oauth2ResponseConsumer.html",
                         "state": oauth2Util.generateRandomString(16), //random state
                         "acr_values": "selectRole",
