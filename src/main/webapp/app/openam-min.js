@@ -21,8 +21,6 @@ angular
                             'Accept-API-Version': 'resource=1.1, protocol=1.0'
                         },
                         data: {
-                            'user': username,
-                            'password': password
                         }
                     };
                    return $http(req); // returning with the promise
