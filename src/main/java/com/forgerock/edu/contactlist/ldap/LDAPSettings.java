@@ -12,7 +12,7 @@ public class LDAPSettings {
 
     private String ldapHost = "localhost";
     private int ldapPort = 1389;
-    private String ldapBindDN = "cn=Directory Manager";
+    private String ldapBindDN = "uid=admin";
     private char[] ldapBindPassword = "cangetinds".toCharArray();
     private DN peopleContainerDN = DN.valueOf("ou=people,dc=contactlist,dc=com");
     private DN groupsContainerDN = DN.valueOf("ou=groups,dc=contactlist,dc=com");
