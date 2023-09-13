@@ -5,6 +5,8 @@ angular
             var selfService = {};
 
             var currentToken = null;
+
+            var currentCode  = null;
             /**
              * Initiates the self service process. When the REST call returned, 
              * the received token is saved in the currentToken variable.
@@ -40,7 +42,7 @@ angular
              * is automatically added by this function to the submitted data. 
              * This function also saves the received token
              * into the currentToken variable, which will be used at the next 
-             * function call.
+             * function call. Similarly, it saves the code for the last step.
              * @param {string} processType Can be "forgottenPassword", "forgottenUsername" or "userRegistration"
              * @param {object} input an object with the input structure to submit.
              * @returns {promise} Returns a promise which is satisfied when the REST call returns.
@@ -72,10 +74,15 @@ angular
                     req.data.token = currentToken;
                 }
 
+                if (currentCode) {
+                    req.data.code = currentCode;
+                }
+
                 // returning with the promise
                 return $http(req).then(function (response) {
                     //saving received token in the currentToken variable
                     currentToken = response.data.token;
+                    currentCode = response.data.code;
                     return response.data;
                 });
 
