@@ -5,6 +5,8 @@ angular
             var selfService = {};
 
             var currentToken = null;
+            var currentCode = null;
+
             /**
              * Initiates the self service process. When the REST call returned, 
              * the received token is saved in the currentToken variable.
@@ -70,10 +72,16 @@ angular
                     req.data.token = currentToken;
                 }
 
+                if (currentCode) {
+                    req.data.code = currentCode;
+                }
                 // returning with the promise
                 return $http(req).then(function (response) {
                     //saving received token in the currentToken variable
                     currentToken = response.data.token;
+                    if (response.data.requirements && response.data.requirements.code) {
+                        currentCode = response.data.requirements.code;
+                    }
                     return response.data;
                 });
 
