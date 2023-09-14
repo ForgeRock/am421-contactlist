@@ -5,6 +5,8 @@ angular
             var selfService = {};
 
             var currentToken = null;
+            var currentCode = null;
+
             /**
              * Initiates the self service process. When the REST call returned, 
              * the received token is saved in the currentToken variable.
@@ -58,7 +60,7 @@ angular
                         'Accept-API-Version': 'resource=1.0'
                     },
                     data: {
-                        //TODO Ch4L3Ex3: Send the input sructure in the body as "input". (Hint: Type input: input)
+                        //TODO Ch4L3Ex3: Send the input structure in the body as "input". (Hint: Type input: input)
                     }
 
                 };
@@ -69,11 +71,16 @@ angular
                 if (currentToken) {
                     req.data.token = currentToken;
                 }
-
+                if (currentCode) {
+                    req.data.code = currentCode;
+                }
                 // returning with the promise
                 return $http(req).then(function (response) {
                     //saving received token in the currentToken variable
                     currentToken = response.data.token;
+                    if (response.data.requirements && response.data.requirements.code) {
+                        currentCode = response.data.requirements.code;
+                    }
                     return response.data;
                 });
 
