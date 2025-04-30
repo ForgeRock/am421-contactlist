@@ -106,10 +106,19 @@ angular
                     "sn": "familyName",
                     "givenName": "givenName"
                 };
-                //TODO Ch4L2Ex1: Get the user profile by sending a GET request to serverURI/json/users/<username>?_fields=<comma separated field names>. Hint: use the encodeURIComponent function to urlencode the username in the path.
-                //TODO Ch4L2Ex1: Ex1: Pass the tokenId as a header named iPlanetDirectoryPro.
-                //TODO Ch4L2Ex1: Query the following fields: username,mail,cn,sn,givenName.
+                //DONE Ch4L2Ex1: Get the user profile by sending a GET request to serverURI/json/users/<username>?_fields=<comma separated field names>. Hint: use the encodeURIComponent function to urlencode the username in the path.
+                //DONE Ch4L2Ex1: Ex1: Pass the tokenId as a header named iPlanetDirectoryPro.
+                //DONE Ch4L2Ex1: Query the following fields: username,mail,cn,sn,givenName.
                 var req = {
+                'method': 'GET',
+                                    'url': openamConstants.serverURI + "/json/users/" + encodeURIComponent(username),
+                                    headers: {
+                                        'iPlanetDirectoryPro': tokenId,
+                                        'Accept-API-Version': 'resource=1.0, protocol=1.0'
+                                    },
+                                    params: {
+                                        _fields: "username,mail,cn,sn,givenName"
+                                    }
                 };
 
                 var deferred = $q.defer();
@@ -151,9 +160,20 @@ angular
             loginService.logout = function (tokenId) {
                 //Invalidates session with id: tokenId
                 console.info("openam.logout called with tokenId=" + tokenId);
-                //TODO Ch4L2Ex1: Send a logout request to OpenAM. Send a POST request to serverURI/json/sessions/?_action=logout with an iPlanetDirectoryPro header.
-                //TODO Ch4L2Ex1: Send Content-Type and Accept headers as well with the value 'application/json'.
+                //DONE Ch4L2Ex1: Send a logout request to OpenAM. Send a POST request to serverURI/json/sessions/?_action=logout with an iPlanetDirectoryPro header.
+                //DONE Ch4L2Ex1: Send Content-Type and Accept headers as well with the value 'application/json'.
                 var req = {
+                    'url': openamConstants.serverURI + "/json/sessions/",
+                    'method': 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'iPlanetDirectoryPro': tokenId,
+                        'Accept-API-Version': 'resource=1.1, protocol=1.0'
+                        },
+                    params: {
+                        \_action: 'logout'
+                        }
                 };
                 var promise = $http(req);
                 return promise;
